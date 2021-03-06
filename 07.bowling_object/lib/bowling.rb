@@ -5,7 +5,7 @@ require_relative './shot'
 require_relative './frame'
 
 score = ARGV[0]
-shots = score.chars.map.with_index do |s, i|
+shots = score.split(',').map.with_index do |s, i|
   if s == 'X'
     Shot.new(i, 10)
   else
