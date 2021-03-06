@@ -7,8 +7,6 @@ require_relative './text_generator'
 
 # Class for performing output
 class Command
-
-
   def initialize
     current_dir = Pathname.new(Dir.pwd)
     gen = TextGenerator.new(params(ARGV), current_dir)

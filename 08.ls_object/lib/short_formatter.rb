@@ -2,6 +2,8 @@
 
 # module for formatting when there is no 'l' option
 module ShortFormatter
+  TAB_LENGTH = 8
+
   class << self
     @rows = 0
     @cols = 0
@@ -31,14 +33,14 @@ module ShortFormatter
 
     # add appropriate tabs
     def adjust_length(name)
-      name + "\t" * ((((@length - name.length) - 1) / 8) + 1)
+      name + "\t" * ((((@length - name.length) - 1) / TAB_LENGTH) + 1)
     end
 
     # set class instance variables
     def init_size_information
       terminal_cols = `tput cols`.to_i
       max_file_length = @files.max { |a, b| a.name.length <=> b.name.length }.name.length
-      @length = max_file_length + 8 - ((max_file_length % 8))
+      @length = max_file_length + TAB_LENGTH - ((max_file_length % TAB_LENGTH))
       @cols, @rows = culculate_extent(terminal_cols, max_file_length)
     end
 
