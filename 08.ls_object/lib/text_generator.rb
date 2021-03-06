@@ -25,6 +25,8 @@ class TextGenerator
     options.include?(:l) ? LongFormatter.transform(files) : ShortFormatter.transform(files)
   end
 
+  private
+
   def make_names
     if options.include?(:a)
       Dir.children(@current_dir) + ['.', '..']
