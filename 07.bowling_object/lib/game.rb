@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require_relative './shot'
@@ -13,6 +12,7 @@ class Game
 
   class << self
     private
+
     def make_shots(input_string)
       input_string.split(',').map.with_index do |s, i|
         if s == 'X'
@@ -59,9 +59,8 @@ class Game
           shots[current_time + 2].point +
           frames[index - 1]&.score
       else
-          frame.shot1.point + frame.shot2.point + frames[index - 1]&.score
+        frame.shot1.point + frame.shot2.point + frames[index - 1]&.score
       end
     end
   end
 end
-
