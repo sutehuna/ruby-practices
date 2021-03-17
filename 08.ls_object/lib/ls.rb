@@ -8,23 +8,25 @@ require_relative './text_generator'
 
 # Class for performing output
 class Command
-  def initialize
-    current_dir = Pathname.new(Dir.pwd)
-    gen = TextGenerator.new(params(ARGV), current_dir)
-    puts gen.generate_text
-  end
+  class << self
+    def run
+      current_dir = Pathname.new(Dir.pwd)
+      gen = TextGenerator.new(params(ARGV), current_dir)
+      puts gen.generate_text
+    end
 
-  private
+    private
 
-  def params(argv)
-    opt = OptionParser.new
-    params = []
-    opt.on('-a') { params << :a }
-    opt.on('-l') { params << :l }
-    opt.on('-r') { params << :r }
-    opt.parse!(argv)
-    params
+    def params(argv)
+      opt = OptionParser.new
+      params = []
+      opt.on('-a') { params << :a }
+      opt.on('-l') { params << :l }
+      opt.on('-r') { params << :r }
+      opt.parse!(argv)
+      params
+    end
   end
 end
 
-Command.new
+Command.run
