@@ -4,8 +4,6 @@
 module LongFormatter
   # The class that handles the appearance information needed for display
   class VisualStat
-    attr_reader :name, :max_width, :side
-
     def initialize(name, values, side)
       @name = name
       @max_width = values.map { |v| v.to_s.length }.max
@@ -13,13 +11,13 @@ module LongFormatter
     end
 
     def format(value)
-      justs(side, value.to_s)
+      justs(value.to_s)
     end
 
     private
 
-    def justs(side, value)
-      side == 'l' ? value.ljust(max_width, ' ') : value.rjust(max_width, ' ')
+    def justs(value)
+      @side == 'l' ? value.ljust(@max_width, ' ') : value.rjust(@max_width, ' ')
     end
   end
 
