@@ -2,7 +2,7 @@
 
 # The class that holds information about a single file (in a broad sense)
 class FileStat
-  attr_accessor :name, :blocks, :permission, :nlink, :uname, :gname, :size, :mtime
+  attr_reader :name, :blocks, :permission, :nlink, :uname, :gname, :size, :mtime
 
   def initialize(name, stats)
     @name = name
