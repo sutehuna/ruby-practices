@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './shot'
+require_relative 'shot'
 
 # Class about one frame
 class Frame

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './shot'
-require_relative './frame'
+require_relative 'shot'
+require_relative 'frame'
 
 class Game
   def self.result_for(input_string)
