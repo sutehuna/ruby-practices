@@ -8,7 +8,6 @@ class WC
   class << self
     def run
       files, is_only_lines = parse_argv
-      puts is_only_lines
       input_info = format_input(files)
 
       if input_info.instance_of?(Array)
