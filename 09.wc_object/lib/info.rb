@@ -15,9 +15,9 @@ class Info
     if is_only_lines
       " #{@rows_count.to_s.rjust(max_digits[:max_digit_of_rows_count])} #{@name}"
     else
-      " #{@rows_count.to_s.rjust(max_digits[:max_digit_of_rows_count])} \
-      #{@words_count.to_s.rjust(max_digits[:max_digit_of_words_count])} \
-      #{@byte_size.to_s.rjust(max_digits[:max_digit_of_byte_size])} #{@name}"
+      " #{@rows_count.to_s.rjust(max_digits[:max_digit_of_rows_count])}" \
+        " #{@words_count.to_s.rjust(max_digits[:max_digit_of_words_count])}" \
+        " #{@byte_size.to_s.rjust(max_digits[:max_digit_of_byte_size])} #{@name}"
     end
   end
 end
