@@ -21,7 +21,7 @@ class WC
     end
 
     def format_input(files)
-      if !files.nil?
+      if !files.empty?
         if files.size == 1
           Info.new(File.read(files.first), files.first)
         else
