@@ -6,7 +6,7 @@ class Info
   def initialize(text = '', name = '')
     @byte_size = text.bytesize
     @rows_count = text.scan(/\n/).size
-    @words_count = text.split(/[\s　]+/).size
+    @words_count = text.split(/[\s]+/).size
     @name = name
   end
 
