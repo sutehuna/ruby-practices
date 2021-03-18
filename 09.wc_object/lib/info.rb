@@ -4,7 +4,6 @@ class Info
   attr_accessor :byte_size, :rows_count, :words_count, :name
 
   def initialize(text = '', name = '')
-    text = text.gsub(/\r\n?/, "\n")
     @byte_size = text.bytesize
     @rows_count = text.scan(/\n/).size
     @words_count = text.split(/[\s　]+/).size
