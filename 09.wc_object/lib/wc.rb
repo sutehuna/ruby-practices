@@ -4,30 +4,27 @@
 require 'optparse'
 
 class WC
-  @options = {}
-
   class << self
-    attr_accessor :options
-
     def run
-      input_info = format_input
+      files, is_only_lines = parse_argv
+      input_info = format_input(files)
 
       if input_info.instance_of?(Array)
         total_info = build_total_info(input_info)
         max_digits = compute_max_digits(total_info)
-        puts [*input_info, total_info].inject('') { |text, info| text += (info.build_line(max_digits) + "\n") }
+        puts [*input_info, total_info].inject('') { |text, info| text += (info.build_line(max_digits, is_only_lines) + "\n") }
       else
         max_digits = compute_max_digits(input_info)
-        puts input_info.build_line(max_digits)
+        puts input_info.build_line(max_digits, is_only_lines)
       end
     end
 
-    def format_input
-      if !ARGV.empty?
-        if ARGV.size == 1
-          Info.new(File.read(ARGV[0]), ARGV[0])
+    def format_input(files)
+      if !files.nil?
+        if files.size == 1
+          Info.new(File.read(files.first), files.first)
         else
-          ARGV.map { |f| Info.new(File.read(f), f) }
+          files.map { |f| Info.new(File.read(f), f) }
         end
       else
         Info.new($stdin.readlines.join)
@@ -50,6 +47,14 @@ class WC
       max_digit_of_words_count = [temporary_max_digit, total_info.words_count.to_s.length].max
       { max_digit_of_byte_size: max_digit_of_byte_size, max_digit_of_rows_count: max_digit_of_rows_count, max_digit_of_words_count: max_digit_of_words_count }
     end
+
+    def parse_argv
+      is_only_lines = false
+      opt = OptionParser.new
+      opt.on('-l') { is_only_lines = true }
+
+      [opt.parse!(ARGV), is_only_lines]
+    end
   end
 end
 
@@ -64,8 +69,8 @@ class Info
     @name = name
   end
 
-  def build_line(max_digits)
-    if WC.options['l']
+  def build_line(max_digits, is_only_lines)
+    if is_only_lines
       " #{@rows_count.to_s.rjust(max_digits[:max_digit_of_rows_count])} #{@name}"
     else
       " #{@rows_count.to_s.rjust(max_digits[:max_digit_of_rows_count])} \
