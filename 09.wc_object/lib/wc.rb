@@ -13,7 +13,7 @@ class WC
       if input_info.instance_of?(Array)
         total_info = build_total_info(input_info)
         max_digits = compute_max_digits(total_info)
-        puts [*input_info, total_info].inject('') { |text, info| text += (info.build_line(max_digits, is_only_lines) + "\n") }
+        puts [*input_info, total_info].map { |info| info.build_line(max_digits, is_only_lines) }.join("\n")
       else
         max_digits = compute_max_digits(input_info)
         puts input_info.build_line(max_digits, is_only_lines)
@@ -38,6 +38,7 @@ class WC
       total.rows_count = files.map(&:rows_count).sum
       total.words_count = files.map(&:words_count).sum
       total.name = 'total'
+
       total
     end
 
@@ -46,6 +47,7 @@ class WC
       max_digit_of_byte_size = [temporary_max_digit, total_info.byte_size.to_s.length].max
       max_digit_of_rows_count = [temporary_max_digit, total_info.rows_count.to_s.length].max
       max_digit_of_words_count = [temporary_max_digit, total_info.words_count.to_s.length].max
+
       { max_digit_of_byte_size: max_digit_of_byte_size, max_digit_of_rows_count: max_digit_of_rows_count, max_digit_of_words_count: max_digit_of_words_count }
     end
 
