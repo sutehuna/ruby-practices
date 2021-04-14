@@ -5,36 +5,36 @@ require 'optparse'
 require_relative 'info'
 
 class WC
+  MINIMUM_DIGIT = 7
+
   class << self
     def run
       files, is_only_lines = parse_argv
       input_info = format_input(files)
 
-      if input_info.instance_of?(Array)
+      if input_info.length > 1
         total_info = build_total_info(input_info)
         max_digits = compute_max_digits(total_info)
         puts [*input_info, total_info].map { |info| info.build_line(max_digits, is_only_lines) }.join("\n")
       else
-        max_digits = compute_max_digits(input_info)
-        puts input_info.build_line(max_digits, is_only_lines)
+        max_digits = compute_max_digits(input_info.first)
+        puts input_info.first.build_line(max_digits, is_only_lines)
       end
     end
 
+    private
+
     def format_input(files)
       if !files.empty?
-        if files.size == 1
-          Info.new(File.read(files.first), files.first)
-        else
-          files.map { |f| Info.new(File.read(f), f) }
-        end
+        files.map { |f| Info.new(File.read(f), f) }
       else
-        Info.new($stdin.readlines.join)
+        [Info.new($stdin.readlines.join)]
       end
     end
 
     def build_total_info(files)
       total = Info.new
-      total.byte_size = files.map(&:byte_size).sum
+      total.bytesize = files.map(&:bytesize).sum
       total.rows_count = files.map(&:rows_count).sum
       total.words_count = files.map(&:words_count).sum
       total.name = 'total'
@@ -43,12 +43,11 @@ class WC
     end
 
     def compute_max_digits(total_info)
-      temporary_max_digit = 7
-      max_digit_of_byte_size = [temporary_max_digit, total_info.byte_size.to_s.length].max
-      max_digit_of_rows_count = [temporary_max_digit, total_info.rows_count.to_s.length].max
-      max_digit_of_words_count = [temporary_max_digit, total_info.words_count.to_s.length].max
+      bytesize_width = [MINIMUM_DIGIT, total_info.bytesize.to_s.length].max
+      rows_count_width = [MINIMUM_DIGIT, total_info.rows_count.to_s.length].max
+      words_count_width = [MINIMUM_DIGIT, total_info.words_count.to_s.length].max
 
-      { max_digit_of_byte_size: max_digit_of_byte_size, max_digit_of_rows_count: max_digit_of_rows_count, max_digit_of_words_count: max_digit_of_words_count }
+      { bytesize_width: bytesize_width, rows_count_width: rows_count_width, words_count_width: words_count_width }
     end
 
     def parse_argv
