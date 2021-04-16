@@ -13,7 +13,7 @@ class WC
       input_counts = generate_counts(files)
 
       if input_counts.length > 1
-        total_count = build_total_count(input_counts)
+        total_count = Count.new(input_counts)
         max_digits = compute_max_digits(total_count)
         puts [*input_counts, total_count].map { |count| count.build_line(max_digits, is_only_lines) }.join("\n")
       else
@@ -30,16 +30,6 @@ class WC
       else
         [Count.new($stdin.readlines.join)]
       end
-    end
-
-    def build_total_count(counts)
-      total = Count.new
-      total.bytesize = counts.map(&:bytesize).sum
-      total.rows_count = counts.map(&:rows_count).sum
-      total.words_count = counts.map(&:words_count).sum
-      total.name = 'total'
-
-      total
     end
 
     def compute_max_digits(total_count)
