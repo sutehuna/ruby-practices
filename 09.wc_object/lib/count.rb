@@ -21,8 +21,8 @@ class Count
         @rows_count += count.rows_count
         @words_count += count.words_count
       end
-      
-      @name = 'total' 
+
+      @name = 'total'
     end
   end
 
