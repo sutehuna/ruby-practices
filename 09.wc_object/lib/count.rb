@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Info
+class Count
   attr_accessor :bytesize, :rows_count, :words_count, :name
 
   def initialize(text = '', name = '')
