@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Count
+class CountStatistic
   attr_reader :bytesize, :rows_count, :words_count, :name
 
   def initialize(text_or_counts, name = '')
