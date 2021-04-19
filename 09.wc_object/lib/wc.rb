@@ -26,10 +26,10 @@ class WC
     private
 
     def generate_statistics(files)
-      if !files.empty?
-        files.map { |f| CountStatistic.new(File.read(f), f) }
-      else
+      if files.empty?
         [CountStatistic.new($stdin.readlines.join)]
+      else
+        files.map { |f| CountStatistic.new(File.read(f), f) }
       end
     end
 
