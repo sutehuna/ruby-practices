@@ -32,10 +32,10 @@ class WC
       end
     end
 
-    def compute_max_digits(total_count)
-      bytesize_width = [MINIMUM_DIGIT, total_count.bytesize.to_s.length].max
-      rows_count_width = [MINIMUM_DIGIT, total_count.rows_count.to_s.length].max
-      words_count_width = [MINIMUM_DIGIT, total_count.words_count.to_s.length].max
+    def compute_max_digits(count)
+      bytesize_width = [MINIMUM_DIGIT, count.bytesize.to_s.length].max
+      rows_count_width = [MINIMUM_DIGIT, count.rows_count.to_s.length].max
+      words_count_width = [MINIMUM_DIGIT, count.words_count.to_s.length].max
 
       { bytesize_width: bytesize_width, rows_count_width: rows_count_width, words_count_width: words_count_width }
     end
