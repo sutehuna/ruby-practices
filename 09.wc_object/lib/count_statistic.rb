@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
+# Class that represents statistical data.
 class CountStatistic
   attr_reader :bytesize, :rows_count, :words_count, :name
 
   def initialize(text_or_counts, name = '')
     if text_or_counts.is_a?(String)
       text = text_or_counts
-      @bytesize = text.bytesize
-      @rows_count = text.scan(/\n/).size
-      @words_count = text.strip.split(/\s+/).size
+      @bytesize, @rows_count, @word_count = text_statistic
       @name = name
     else
       counts = text_or_counts
-      @bytesize = 0
-      @rows_count = 0
-      @words_count = 0
+      @bytesize, @rows_count, @word_count = [0, 0, 0]
 
       counts.each do |count|
         @bytesize += count.bytesize
@@ -26,13 +23,19 @@ class CountStatistic
     end
   end
 
-  def build_line(max_digits, is_only_lines)
-    if is_only_lines
-      " #{@rows_count.to_s.rjust(max_digits[:rows_count_width])} #{@name}"
-    else
-      " #{@rows_count.to_s.rjust(max_digits[:rows_count_width])}" \
-        " #{@words_count.to_s.rjust(max_digits[:words_count_width])}" \
-        " #{@bytesize.to_s.rjust(max_digits[:bytesize_width])} #{@name}"
+  def text_statistic(text){
+    [text.bytesize, text.scan(/\n/).size, text.strip.split(/\s+/).size]
+  }
+
+  def build_line(max_digits, options)
+    line = ''
+    line += " #{@rows_count.to_s.rjust(max_digits[:rows_count_width])}" if options.include?(:l) || options.empty?
+
+    if options.empty?
+      line += " #{@words_count.to_s.rjust(max_digits[:words_count_width])}" \
+                " #{@bytesize.to_s.rjust(max_digits[:bytesize_width])}"
     end
+
+    line + " #{@name}"
   end
 end
