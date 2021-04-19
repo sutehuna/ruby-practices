@@ -15,7 +15,7 @@ class WC
       if input_counts.length > 1
         total_count = Count.new(input_counts)
         max_digits = compute_max_digits(total_count)
-        puts [*input_counts, total_count].map { |count| count.build_line(max_digits, is_only_lines) }.join("\n")
+        puts [*input_counts, total_count].map { |count| count.build_line(max_digits, is_only_lines) }
       else
         max_digits = compute_max_digits(input_counts.first)
         puts input_counts.first.build_line(max_digits, is_only_lines)
