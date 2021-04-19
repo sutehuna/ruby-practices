@@ -16,7 +16,7 @@ class WC
       if input_statistics.length > 1
         total_statistic = CountStatistic.new(input_statistics)
         max_digits = compute_max_digits(total_statistic)
-        puts([*input_statistics, total_statistic].map { |stat| stat.build_line(max_digits, options) })
+        puts([*input_statistics, total_statistic].map { |statistic| statistic.build_line(max_digits, options) })
       else
         max_digits = compute_max_digits(input_statistics.first)
         puts input_statistics.first.build_line(max_digits, options)

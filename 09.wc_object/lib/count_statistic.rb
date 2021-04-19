@@ -4,28 +4,17 @@
 class CountStatistic
   attr_reader :bytesize, :rows_count, :words_count, :name
 
-  def initialize(text_or_counts, name = '')
-    if text_or_counts.is_a?(String)
-      text = text_or_counts
-      @bytesize, @rows_count, @word_count = text_statistic
+  def initialize(text_or_statistics, name = '')
+    if text_or_statistics.is_a?(String)
+      text = text_or_statistics
+      count_text_statistic(text)
       @name = name
     else
-      counts = text_or_counts
-      @bytesize, @rows_count, @word_count = [0, 0, 0]
-
-      counts.each do |count|
-        @bytesize += count.bytesize
-        @rows_count += count.rows_count
-        @words_count += count.words_count
-      end
-
+      statistics = text_or_statistics
+      calculate_total_statistic(statistics)
       @name = 'total'
     end
   end
-
-  def text_statistic(text){
-    [text.bytesize, text.scan(/\n/).size, text.strip.split(/\s+/).size]
-  }
 
   def build_line(max_digits, options)
     line = ''
@@ -37,5 +26,28 @@ class CountStatistic
     end
 
     line + " #{@name}"
+  end
+
+  private
+
+  def count_text_statistic(text)
+    @bytesize = text.bytesize
+    @rows_count = text.scan(/\n/).size
+    @words_count = text.strip.split(/\s+/).size
+  end
+
+  def init_parameters
+    @bytesize = 0
+    @rows_count = 0
+    @words_count = 0
+  end
+
+  def calculate_total_statistic(statistics)
+    init_parameters
+    statistics.each do |statistic|
+      @bytesize += statistic.bytesize
+      @rows_count += statistic.rows_count
+      @words_count += statistic.words_count
+    end
   end
 end
